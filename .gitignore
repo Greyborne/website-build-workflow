@@ -1,0 +1,20 @@
+# Projects directory - keep your actual project files local or in separate repos
+# Uncomment the line below if you want to gitignore all projects
+# projects/
+
+# But always track the .gitkeep placeholder
+!projects/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
