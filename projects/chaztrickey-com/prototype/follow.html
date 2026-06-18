@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Follow Chaz Trickey | Prototype</title>
+    <meta name="description" content="Prototype Follow page for chaztrickey.com.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <div class="nav-inner">
+          <a class="brand" href="index.html" aria-label="Chaz Trickey home">
+            <span class="brand-name">Chaz Trickey</span>
+            <span class="brand-kicker">Teaching one truth at a time</span>
+          </a>
+          <nav class="nav-links" aria-label="Primary navigation">
+            <a href="index.html">Home</a>
+            <a href="who-i-am.html">Who I Am</a>
+            <a href="index.html#articles">Articles</a>
+            <a href="follow.html" aria-current="page">Follow</a>
+          </nav>
+          <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" data-menu-button>Menu</button>
+        </div>
+        <nav class="mobile-panel" aria-label="Mobile navigation" data-mobile-panel>
+          <a href="index.html">Home</a>
+          <a href="who-i-am.html">Who I Am</a>
+          <a href="index.html#articles">Articles</a>
+          <a href="follow.html" aria-current="page">Follow</a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="page-hero reveal">
+          <span class="eyebrow">Follow / contact prototype</span>
+          <h1>Find the official channels here first.</h1>
+          <p class="page-lede">This page keeps launch honest: active platforms are linked, planned platforms are marked clearly, and the contact form waits for backend wiring.</p>
+        </section>
+
+        <section class="section section-wide reveal" aria-labelledby="follow-title">
+          <div class="section-header">
+            <span class="eyebrow">Platform status</span>
+            <h2 class="section-heading" id="follow-title">Follow what is live. Know what is coming.</h2>
+          </div>
+          <div class="platform-grid">
+            <article class="card platform-card">
+              <span class="status status-live">Live / link ready</span>
+              <h3>Facebook Reels</h3>
+              <p>Use this as the first active platform link once the final URL is confirmed.</p>
+              <a class="button button-primary" href="#" aria-label="Facebook Reels placeholder link">Facebook placeholder</a>
+            </article>
+            <article class="card platform-card">
+              <span class="status">Coming soon</span>
+              <h3>YouTube</h3>
+              <p>For longer technical explanations, civic commentary, and launch videos.</p>
+              <span class="meta">No public link yet</span>
+            </article>
+            <article class="card platform-card">
+              <span class="status">Coming soon</span>
+              <h3>Rumble</h3>
+              <p>Planned as an additional video distribution channel.</p>
+              <span class="meta">No public link yet</span>
+            </article>
+            <article class="card platform-card">
+              <span class="status">Coming soon</span>
+              <h3>TikTok</h3>
+              <p>Planned for short-form clips once posting begins.</p>
+              <span class="meta">No public link yet</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="section contact-grid reveal" aria-labelledby="contact-title">
+          <div class="contact-copy">
+            <span class="eyebrow">Direct message</span>
+            <h2 class="section-heading" id="contact-title">Send a note when the contact route is wired.</h2>
+            <p>This form is intentionally non-functional in the prototype. Production needs the destination email and email provider before launch.</p>
+            <p class="prototype-note">Prototype boundary: no API route, no database, no email delivery, no spam handling yet.</p>
+          </div>
+          <form class="card contact-form" data-contact-form>
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" placeholder="Your name">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="subject">Subject</label>
+              <input id="subject" name="subject" placeholder="What is this about?">
+            </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Write your message here"></textarea>
+            </div>
+            <button class="button button-primary" type="submit">Test prototype form</button>
+            <p class="form-note" data-form-note aria-live="polite"></p>
+          </form>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <span>© <span data-year></span> Chaz Trickey. Prototype for review.</span>
+          <nav class="footer-links" aria-label="Footer navigation">
+            <a href="index.html">Home</a>
+            <a href="who-i-am.html">Who I Am</a>
+            <a href="#">Privacy</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
+

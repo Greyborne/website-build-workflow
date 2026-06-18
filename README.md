@@ -27,7 +27,7 @@ This workflow forces specificity at every step — from design system to copy �
 ## Workflow Overview
 
 ```
-Phase 0 → Fill Project Brief (no AI needed)
+Phase 0 → Client Questionnaire + Project Brief
     ↓
 Phase 1 → Inspiration Analysis (p01)
     ↓
@@ -35,14 +35,16 @@ Phase 2 → Design System Definition (p02)
     ↓
 Phase 3 → Architecture (p03 → p04)
     ↓
-Phase 4 → Build Setup (p05 + stack scaffold)
+Phase 4 → Static Prototype + Client Review (p05 + p05a)
     ↓
-Phase 5 → Component Build (p06 × N components)
+Phase 5 → Production Build Setup (stack scaffold + CMS)
+    ↓
+Phase 6 → Component Build (p06 × N components)
          ↕ run p07 anti-slop audit per component
     ↓
-Phase 6 → Content / Copy (p08 × N sections)
+Phase 7 → Content / Copy (p08 × N sections)
     ↓
-Phase 7 → Final QA (p09)
+Phase 8 → Final QA (p09)
     ↓
 Deploy to Hostinger VPS
 ```
@@ -51,24 +53,50 @@ Deploy to Hostinger VPS
 
 ## How to Start a New Project
 
-### Step 1 — Copy the project brief
+### Step 1 — Collect client answers
+Send:
+```
+templates/client-questionnaire.md
+```
+
+Then run:
+```
+prompts/p00-brief-normalizer.md
+```
+
+Save the normalized output as `projects/YOUR-PROJECT-NAME/brief.md`.
+
+### Step 2 — Copy the project brief manually, if needed
 ```
 cp templates/project-brief-template.md projects/YOUR-PROJECT-NAME/brief.md
 ```
-Fill it out manually. No AI yet. This forces you to think before you build.
+Use this path when you already know the client well enough to fill out the brief yourself.
 
-### Step 2 — Collect inspiration
+### Step 3 — Collect inspiration
 Find 2–4 websites that have the layout, feel, or component patterns you want to reverse-engineer.
 Note the URLs or take screenshots.
 
-### Step 3 — Run Phase 1 with your AI tool
+### Step 4 — Run Phase 1 with your AI tool
 Open your AI of choice. Start every session with the **Master System Prompt**:
 ```
 prompts/MASTER-SYSTEM-PROMPT.md
 ```
 Then paste the **p01 prompt** and provide your inspiration URLs or screenshots.
 
-### Step 4 — Follow the phases in order
+### Step 5 — Build a static prototype before production
+After design system and page blueprints are drafted, run:
+```
+prompts/p05a-static-prototype.md
+```
+
+Show the prototype to the client and complete:
+```
+templates/prototype-review-checklist.md
+```
+
+Only start the CMS/backend build after the prototype is approved.
+
+### Step 6 — Follow the phases in order
 Each phase prompt is self-contained. At the start of each new AI session, re-paste the Master System Prompt and the relevant phase prompt.
 
 ---
@@ -81,27 +109,26 @@ website-build-workflow/
 ├── STACK.md                            ← Tech stack decisions + Hostinger setup
 │
 ├── workflow/                           ← Phase-by-phase process guides
-│   ├── 00-PROJECT-BRIEF.md
-│   ├── 01-INSPIRATION-ANALYSIS.md
-│   ├── 02-DESIGN-SYSTEM.md
-│   ├── 03-ARCHITECTURE.md
-│   ├── 04-BUILD.md
-│   ├── 05-CONTENT.md
-│   └── 06-QA-REVIEW.md
+│   ├── WORKFLOW-PHASES.md
+│   └── IMPROVEMENTS.md
 │
 ├── prompts/                            ← Paste-ready AI prompts
 │   ├── MASTER-SYSTEM-PROMPT.md         ← Include at start of EVERY session
+│   ├── p00-brief-normalizer.md
 │   ├── p01-inspiration-reverse-engineer.md
 │   ├── p02-design-token-extraction.md
 │   ├── p03-component-inventory.md
 │   ├── p04-page-blueprint.md
 │   ├── p05-tailwind-design-system.md
+│   ├── p05a-static-prototype.md
 │   ├── p06-component-build.md
 │   ├── p07-anti-slop-audit.md
 │   ├── p08-copy-writing.md
 │   └── p09-final-qa.md
 │
 ├── templates/                          ← Reusable project scaffolding docs
+│   ├── client-questionnaire.md
+│   ├── prototype-review-checklist.md
 │   ├── project-brief-template.md
 │   ├── design-system-template.md
 │   └── component-spec-template.md

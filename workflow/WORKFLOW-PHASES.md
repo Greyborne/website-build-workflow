@@ -5,17 +5,18 @@
 
 ## Overview
 
-Every project follows these 7 phases in order. Do not skip phases. Do not run Phase 4 prompts before Phase 2 is complete. The workflow is linear by design — each phase output feeds the next.
+Every project follows these phases in order. Do not skip phases. Do not run prototype/build prompts before Phase 2 is complete. The workflow is linear by design — each phase output feeds the next.
 
 ```
-Phase 0  →  Project Brief (no AI)
+Phase 0  →  Client Questionnaire + Project Brief
 Phase 1  →  Inspiration Analysis (P01 × 2-4 sites)
 Phase 2  →  Design System (P02 × 1)
 Phase 3  →  Architecture (P03 × 1, then P04 × N pages)
-Phase 4  →  Build Setup (P05 × 1, scaffold Next.js + Payload)
-Phase 5  →  Component Builds (P06 × N components, P07 after each)
-Phase 6  →  Copy (P08 × N sections)
-Phase 7  →  Final QA (P09 × 1)
+Phase 4  →  Static Prototype + Client Review (P05 + P05A)
+Phase 5  →  Production Build Setup (scaffold Next.js + Payload)
+Phase 6  →  Component Builds (P06 × N components, P07 after each)
+Phase 7  →  Copy (P08 × N sections)
+Phase 8  →  Final QA (P09 × 1)
 ```
 
 **Time estimates per phase (small business site, 5–8 pages):**
@@ -26,31 +27,35 @@ Phase 7  →  Final QA (P09 × 1)
 | Phase 1 — Inspiration | 30–60 min |
 | Phase 2 — Design System | 30–45 min |
 | Phase 3 — Architecture | 45–90 min |
-| Phase 4 — Build Setup | 1–2 hours |
-| Phase 5 — Components | 4–12 hours (varies by complexity) |
-| Phase 6 — Copy | 1–3 hours |
-| Phase 7 — QA | 1–2 hours |
+| Phase 4 — Static Prototype | 2–6 hours |
+| Phase 5 — Production Build Setup | 1–2 hours |
+| Phase 6 — Components | 4–12 hours (varies by complexity) |
+| Phase 7 — Copy | 1–3 hours |
+| Phase 8 — QA | 1–2 hours |
 | **Total** | **10–25 hours** |
 
 ---
 
-## Phase 0 — Project Brief
+## Phase 0 — Client Questionnaire + Project Brief
 
-**Goal:** Define the project completely before touching any AI tool.  
-**Tools:** Text editor only. No AI.  
+**Goal:** Turn client answers into a complete internal brief before design or code work begins.  
+**Tools:** `templates/client-questionnaire.md`, `prompts/p00-brief-normalizer.md`, text editor.  
 **Output:** `projects/{CLIENT}/brief.md`
 
 ### Steps
 
-1. Copy `templates/project-brief-template.md` to `projects/{CLIENT-SLUG}/brief.md`
-2. Fill in EVERY field. If you don't know an answer, find it before continuing.
-3. If a field doesn't apply, write "N/A" with a brief reason.
-4. Review the "What NOT to Build" section — be ruthless about scope.
-5. Collect inspiration URLs (Section 11 of the brief).
+1. Send `templates/client-questionnaire.md` to the client or complete it from discovery notes.
+2. Run `prompts/p00-brief-normalizer.md` with the client answers.
+3. Save the normalized output as `projects/{CLIENT-SLUG}/brief.md`.
+4. Review every `MISSING` item and decide whether it blocks Phase 1.
+5. If a field doesn't apply, write "N/A" with a brief reason.
+6. Review the "What NOT to Build" section — be ruthless about scope.
+7. Collect inspiration URLs.
 
 ### Quality Gate
 
 Before moving to Phase 1, verify:
+- [ ] P00 verdict is `READY FOR PHASE 1`, or every remaining missing item has been consciously accepted
 - [ ] Every required field is filled in (no blanks or TBDs)
 - [ ] Target audience pain points are written in the audience's words (not yours)
 - [ ] Differentiator is specific (not "great service" or "high quality")
@@ -144,29 +149,63 @@ Before moving to Phase 1, verify:
 
 ---
 
-## Phase 4 — Build Setup
+## Phase 4 — Static Prototype + Client Review
+
+**Goal:** Build a reviewable front-end prototype before investing in CMS/backend work.  
+**Prompts:** P05 (`prompts/p05-tailwind-design-system.md`) + P05A (`prompts/p05a-static-prototype.md`)  
+**Output:** Static prototype with 1-3 representative pages + completed `templates/prototype-review-checklist.md`
+
+### Steps
+
+1. New AI session. Paste MASTER-SYSTEM-PROMPT.md + P05 prompt + full P02 design system.
+2. Create the CSS/design-token layer for the prototype.
+3. New AI session or continued build session. Paste P05A with:
+   - Project brief
+   - Design system
+   - Component inventory
+   - Page blueprints
+   - Available assets
+4. Build 1-3 representative pages, usually Home plus one trust/conversion page.
+5. Test prototype at mobile, tablet, and desktop widths.
+6. Show the prototype to the client.
+7. Complete `templates/prototype-review-checklist.md`.
+8. Do not move to production build until the verdict is approved or approved with minor revisions.
+
+### Quality Gate
+
+- [ ] Prototype communicates the intended first impression.
+- [ ] Prototype uses the approved design system.
+- [ ] Prototype has realistic demo content based on the brief.
+- [ ] Prototype works at mobile, tablet, and desktop widths.
+- [ ] Client review checklist is complete.
+- [ ] Production handoff notes list what becomes CMS-editable later.
+
+---
+
+## Phase 5 — Production Build Setup
 
 **Goal:** Scaffold the codebase and implement the design system in code.  
-**Prompt:** P05 (`prompts/p05-tailwind-design-system.md`)  
+**Prompt:** P05 (`prompts/p05-tailwind-design-system.md`) and approved prototype handoff notes  
 **Output:** Working Next.js + Payload CMS project with design system implemented
 
 ### Steps
 
-1. Scaffold the project (see `STACK.md` Quickstart section):
+1. Confirm the static prototype has been approved.
+2. Scaffold the project (see `STACK.md` Quickstart section):
    ```bash
    npx create-payload-app@latest {client-slug}
    ```
 
-2. New AI session. Paste MASTER-SYSTEM-PROMPT.md + P05 prompt + full P02 design system.
+3. Apply the approved P05 design-token output.
 
-3. Apply the output:
+4. Apply the output:
    - Replace `src/styles/globals.css` with P05 output
    - Install `clsx` and `tailwind-merge`, add `src/lib/cn.ts`
 
-4. Create Payload collections from the component inventory:
+5. Create Payload collections from the component inventory and prototype production handoff notes:
    - Start with `Pages`, `Media`, and the first content collection
 
-5. Test: `npm run dev` — site should run at localhost:3000, admin at localhost:3000/admin
+6. Test: `npm run dev` — site should run at localhost:3000, admin at localhost:3000/admin
 
 ### Quality Gate
 
@@ -177,7 +216,7 @@ Before moving to Phase 1, verify:
 
 ---
 
-## Phase 5 — Component Builds
+## Phase 6 — Component Builds
 
 **Goal:** Build every component, auditing for slop after each one.  
 **Prompts:** P06 (build) → P07 (audit) — alternating, one component at a time  
@@ -218,7 +257,7 @@ For each component in the build order:
 
 ---
 
-## Phase 6 — Copy
+## Phase 7 — Copy
 
 **Goal:** Write specific, human-sounding copy for every section.  
 **Prompt:** P08 (`prompts/p08-copy-writing.md`)  
@@ -246,7 +285,7 @@ For each component in the build order:
 
 ---
 
-## Phase 7 — Final QA
+## Phase 8 — Final QA
 
 **Goal:** Catch everything before launch.  
 **Prompt:** P09 (`prompts/p09-final-qa.md`)  
